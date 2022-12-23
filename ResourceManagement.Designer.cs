@@ -79,6 +79,7 @@
             this.comboBoxTypes.Name = "comboBoxTypes";
             this.comboBoxTypes.Size = new System.Drawing.Size(121, 21);
             this.comboBoxTypes.TabIndex = 4;
+            this.comboBoxTypes.SelectedIndexChanged += new System.EventHandler(this.comboBoxTypes_SelectedIndexChanged);
             // 
             // comboBoxSkills
             // 
@@ -87,6 +88,7 @@
             this.comboBoxSkills.Name = "comboBoxSkills";
             this.comboBoxSkills.Size = new System.Drawing.Size(121, 21);
             this.comboBoxSkills.TabIndex = 5;
+            this.comboBoxSkills.SelectedIndexChanged += new System.EventHandler(this.comboBoxSkills_SelectedIndexChanged);
             // 
             // ResourceManagement
             // 
@@ -101,11 +103,9 @@
             this.Controls.Add(this.label1);
             this.Name = "ResourceManagement";
             this.Text = "ResourceManagement";
-            this.Load += new System.EventHandler(this.ResourceManagement_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
-
         }
 
         #endregion

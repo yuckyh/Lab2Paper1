@@ -59,6 +59,7 @@
             this.tbPassword.Name = "tbPassword";
             this.tbPassword.Size = new System.Drawing.Size(100, 20);
             this.tbPassword.TabIndex = 2;
+            this.tbPassword.UseSystemPasswordChar = true;
             // 
             // label1
             // 
@@ -92,7 +93,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(798, 442);
             this.Controls.Add(this.btnSignIn);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);

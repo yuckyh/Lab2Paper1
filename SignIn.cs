@@ -12,8 +12,9 @@ namespace Lab2Paper1
 {
     public partial class SignIn : Form, IHasInput
     {
-        string userID;
-        string password;
+        private string _userId;
+        private string _password;
+        private ResourceManagement ResourceManagement { get; set; }
         public HasParent HasParent { get; }
         public SignIn(Form parentForm)
         {
@@ -30,7 +31,11 @@ namespace Lab2Paper1
         {
             using (var entity = new Session1Entities())
             {
+                if (!IsValidInput(entity)) return;
                 
+                Hide();
+                ResourceManagement = new ResourceManagement(this);
+                ResourceManagement.Show();
             }
         }
 
@@ -38,33 +43,33 @@ namespace Lab2Paper1
 
         public void UpdateInputValues()
         {
-            userID = tbUserID.Text.ToString().Trim();
-            password = tbPassword.Text.ToString().Trim();
+            _userId = tbUserID.Text.ToString().Trim();
+            _password = tbPassword.Text.ToString().Trim();
         }
 
         public bool IsValidInput(Session1Entities entity)
         {
             UpdateInputValues();
 
-            if (userID.Length == 0 || password.Length == 0)
+            if (_userId.Length == 0 || _password.Length == 0)
             {
                 MessageBox.Show("Please fill in all the textboxes.");
                 return false;
             }
             
-            var doesUserExist = entity.Users
-                .Any(user => user.userId == userID);
+            var isUserNew = entity.Users
+                .Any(user => user.userId == _userId);
             
-            if (!doesUserExist)
+            if (!isUserNew)
             {
                 MessageBox.Show("The user id is not in our database, please register an account.");
                 return false;
             }
 
             var isCredentialsCorrect = entity.Users
-                .Where(user => user.userId == userID)
+                .Where(user => user.userId == _userId)
                 .Select(user => user.userPw)
-                .Any(userPw => userPw == password);
+                .FirstOrDefault() == _password;
             
             if(isCredentialsCorrect) return true;
             

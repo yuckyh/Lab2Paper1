@@ -6,41 +6,88 @@ using System.Windows.Forms;
 
 namespace Lab2Paper1
 {
-    public partial class ResourceManagement : Form
+    public partial class ResourceManagement : Form, IHasInput
     {
-        public ResourceManagement()
+        private string _resourceType;
+        private string _skillType;
+        
+        private const string DefaultResourceType = "Select a Resource Type";
+        private const string DefaultSkillType = "Select a Skill Type";
+        public HasParent HasParent { get; }
+        public ResourceManagement(Form parentForm)
         {
             InitializeComponent();
+            HasParent = new HasParent(parentForm, this);
+            InitInputs();
         }
 
-        private void ResourceManagement_Load(object sender, EventArgs e)
+        private void UpdateGridView(Session1Entities entity)
         {
-            using (var entity = new Session1Entities())
-            {
-                var skillsQuery = from skills in entity.Skills select skills.skillName;
+            UpdateInputValues();
 
-                var resourceTypesQuery = from resourceTypes in entity.Resource_Type select resourceTypes.resTypeName;
-
-                comboBoxSkills.DataSource = skillsQuery.ToList();
-                comboBoxTypes.DataSource = resourceTypesQuery.ToList();
-
-                dataGridView1.DataSource = entity.Resource_Allocation.GroupBy(resourceAllocation => new {
+            dataGridView1.DataSource = entity.Resource_Allocation
+                .GroupBy(resourceAllocation => new
+                {
                     Name = resourceAllocation.Resource.resName,
                     Type = resourceAllocation.Resource.Resource_Type.resTypeName,
                     AvailableQuantity =
                         resourceAllocation.Resource.remainingQuantity == 0 ? "Not available" :
                         resourceAllocation.Resource.remainingQuantity <= 5 ? "Low Stock" :
                         "Sufficient"
-                }).AsEnumerable().Select(skillGroup => new
+                })
+                .AsEnumerable()
+                .Select(skillGroup => new
                 {
                     skillGroup.Key.Name,
                     skillGroup.Key.Type,
-                    Allocated_Skills = skillGroup.Select(group => group.Skill.skillName).Aggregate((current, next) => current + ", " + next),
+                    Allocated_Skills = skillGroup.Select(group => group.Skill.skillName)
+                        .Aggregate((current, next) => current + ", " + next),
                     NoOfSkills = skillGroup.Count(),
-                }).Where(val => val.Type == comboBoxTypes.SelectedValue).ToList();
+                })
+                .Where(val => _resourceType == DefaultResourceType || val.Type == _resourceType)
+                .Where(val => _skillType == DefaultSkillType || val.Allocated_Skills.Split(',').Any(skill => skill == _skillType))
+                .ToList();
+        }
+        
+        public void InitInputs()
+        {
+            using var entity = new Session1Entities();
+            
+            var defaultSkillTypeOption = new string[] { DefaultSkillType }.ToList();
+            var defaultResourceTypeOption = new string[] { DefaultResourceType }.ToList();
+                
+            comboBoxSkills.DataSource = defaultSkillTypeOption
+                .Concat(entity.Skills.Select(skill => skill.skillName))
+                .ToList();
 
-                entity.Users.Add(new User());
-            }
+            comboBoxTypes.DataSource = defaultResourceTypeOption
+                .Concat(entity.Resource_Type.Select(resourceType => resourceType.resTypeName))
+                .ToList();
+                
+            UpdateGridView(entity);
+        }
+
+        public void UpdateInputValues()
+        {
+            _skillType = (comboBoxSkills.SelectedValue ?? "").ToString();
+            _resourceType = (comboBoxTypes.SelectedValue ?? "").ToString();
+        }
+
+        public bool IsValidInput(Session1Entities entity)
+        {
+            return true;
+        }
+
+        private void comboBoxTypes_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            using var entity = new Session1Entities();
+            UpdateGridView(entity);
+        }
+
+        private void comboBoxSkills_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            using var entity = new Session1Entities();
+            UpdateGridView(entity);
         }
     }
 }
