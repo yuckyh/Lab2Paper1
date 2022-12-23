@@ -172,16 +172,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="HasParent.cs" />
-    <Compile Include="IHasInput.cs" />
+    <Compile Include="AddResource.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AddResource.Designer.cs">
+      <DependentUpon>AddResource.cs</DependentUpon>
+    </Compile>
+    <Compile Include="HasParent.cs"/>
+    <Compile Include="IHasInput.cs"/>
     <Compile Include="MainMenu.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="MainMenu.Designer.cs">
       <DependentUpon>MainMenu.cs</DependentUpon>
     </Compile>
-    <Compile Include="Program.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Program.cs"/>
+    <Compile Include="Properties\AssemblyInfo.cs"/>
     <Compile Include="Resource.cs">
       <DependentUpon>Session1.tt</DependentUpon>
     </Compile>
@@ -241,6 +247,9 @@
     <Compile Include="User_Type.cs">
       <DependentUpon>Session1.tt</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="AddResource.resx">
+      <DependentUpon>AddResource.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MainMenu.resx">
       <DependentUpon>MainMenu.cs</DependentUpon>
     </EmbeddedResource>
