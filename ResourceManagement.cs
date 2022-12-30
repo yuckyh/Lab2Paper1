@@ -1,115 +1,130 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
+using Microsoft.EntityFrameworkCore.Internal;
 
-namespace Lab2Paper1
+namespace Lab2Paper1;
+
+public partial class ResourceManagement : Form, ICanInput, IHasParent
 {
-    public partial class ResourceManagement : Form, IHasInput
+    private const string DefaultResourceType = "Select a Resource Type";
+    private const string DefaultSkillType = "Select a Skill Type";
+
+    public ResourceManagement(Form parentForm)
     {
-        private const string DefaultResourceType = "Select a Resource Type";
-        private const string DefaultSkillType = "Select a Skill Type";
-        private string _resourceType, _skillType;
+        InitializeComponent();
+        HasParent.ParentForm = parentForm;
+        CanInput.InitInputs();
+    }
 
-        public ResourceManagement(Form parentForm)
-        {
-            InitializeComponent();
-            HasParent = new HasParent(parentForm, this);
-            InitInputs();
-        }
+    private AddResource AddResource { get; set; }
+    private UpdateResource UpdateResource { get; set; }
+    private IHasParent HasParent => this;
+    private ICanInput CanInput => this;
+    public List<Control> Inputs { get; set; }
 
-        private AddResource AddResource { get; set; }
-        public HasParent HasParent { get; }
+    public void InitInputs()
+    {
+        using Session1Entities entity = new();
 
-        public void InitInputs()
-        {
-            using var entity = new Session1Entities();
+        CanInput.Inputs = new List<Control> { comboBoxTypes, comboBoxSkills };
 
-            var defaultSkillTypeOption = new string[] { DefaultSkillType }.ToList();
-            var defaultResourceTypeOption = new string[] { DefaultResourceType }.ToList();
+        var defaultSkillTypeOption = new[] { DefaultSkillType }.ToList();
+        var defaultResourceTypeOption = new[] { DefaultResourceType }.ToList();
 
-            comboBoxSkills.DataSource = defaultSkillTypeOption
-                .Concat(entity.Skills.Select(skill => skill.skillName))
-                .ToList();
+        comboBoxSkills.DataSource = defaultSkillTypeOption
+            .Concat(entity.Skills.Select(skill => skill.skillName))
+            .ToList();
 
-            comboBoxTypes.DataSource = defaultResourceTypeOption
-                .Concat(entity.Resource_Type.Select(resourceType => resourceType.resTypeName))
-                .ToList();
+        comboBoxTypes.DataSource = defaultResourceTypeOption
+            .Concat(entity.Resource_Type.Select(resourceType => resourceType.resTypeName))
+            .ToList();
 
-            UpdateGridView(entity);
-        }
+        UpdateGridView(entity);
+    }
 
-        public void UpdateInputValues()
-        {
-            _skillType = (comboBoxSkills.SelectedValue ?? "").ToString();
-            _resourceType = (comboBoxTypes.SelectedValue ?? "").ToString();
-        }
+    public new Form ParentForm { get; set; }
 
-        public bool IsValidInput(Session1Entities entity)
-        {
-            return true;
-        }
+    public void UpdateGridView(Session1Entities entity)
+    {
+        var selectedType = comboBoxTypes.SelectedValue?.ToString();
+        var selectedSkill = comboBoxSkills.SelectedValue?.ToString();
 
-        private void UpdateGridView(Session1Entities entity)
-        {
-            UpdateInputValues();
+        dataGridView.DataSource = entity.Resource_Allocation
+            .Where(allocation => selectedType == DefaultResourceType ||
+                                 selectedType == allocation.Resource.Resource_Type.resTypeName)
+            .Where(allocation => selectedSkill == DefaultSkillType ||
+                                 selectedSkill == allocation.Skill.skillName)
+            .GroupBy(allocation => allocation.Resource)
+            .AsEnumerable()
+            .Select(resource => new
+            {
+                Name = resource.Key.resName,
+                Type = resource.Key.Resource_Type.resTypeName,
+                Allocated_Skills = resource.Key.Resource_Allocation.Select(allocation => allocation.Skill.skillName)
+                    .Join(","),
+                NoOfSkills = resource.Count(),
+                AvailableQuantity =
+                    resource.Key.remainingQuantity == 0 ? "Not available" :
+                    resource.Key.remainingQuantity <= 5 ? "Low Stock" :
+                    "Sufficient"
+            })
+            .ToList();
+    }
 
-            dataGridView1.DataSource = entity.Resource_Allocation
-                .GroupBy(resourceAllocation => new
-                {
-                    Name = resourceAllocation.Resource.resName,
-                    Type = resourceAllocation.Resource.Resource_Type.resTypeName,
-                    AvailableQuantity =
-                        resourceAllocation.Resource.remainingQuantity == 0 ? "Not available" :
-                        resourceAllocation.Resource.remainingQuantity <= 5 ? "Low Stock" :
-                        "Sufficient"
-                })
-                .AsEnumerable()
-                .Select(skillGroup => new
-                {
-                    skillGroup.Key.Name,
-                    skillGroup.Key.Type,
-                    Allocated_Skills = skillGroup.Select(group => group.Skill.skillName)
-                        .Aggregate((current, next) => current + ", " + next),
-                    NoOfSkills = skillGroup.Count(),
-                })
-                .Where(val => _resourceType == DefaultResourceType || val.Type == _resourceType)
-                .Where(val =>
-                    _skillType == DefaultSkillType || val.Allocated_Skills.Split(',').Any(skill => skill == _skillType))
-                .ToList();
-        }
+    private void comboBoxTypes_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        using Session1Entities entity = new();
+        UpdateGridView(entity);
+    }
 
-        private void comboBoxTypes_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            using var entity = new Session1Entities();
-            UpdateGridView(entity);
-        }
+    private void comboBoxSkills_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        using Session1Entities entity = new();
+        UpdateGridView(entity);
+    }
 
-        private void comboBoxSkills_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            using var entity = new Session1Entities();
-            UpdateGridView(entity);
-        }
+    private void btnCreate_Click(object sender, EventArgs e)
+    {
+        AddResource = new AddResource(this);
+        AddResource.Show();
+        Hide();
+    }
 
-        private void btnCreate_Click(object sender, EventArgs e)
-        {
-            AddResource = new AddResource(this);
-            AddResource.Show();
-            Hide();
-        }
+    private void btnUpdate_Click(object sender, EventArgs e)
+    {
+        using Session1Entities entity = new();
+        dynamic selectedRow = dataGridView.CurrentRow?.DataBoundItem;
+        var resName = (string)selectedRow?.Name;
+        var selectedResource = entity.Resources.FirstOrDefault(resource => resource.resName == resName);
 
-        private void btnUpdate_Click(object sender, EventArgs e)
-        {
-            // throw new System.NotImplementedException();
-        }
+        UpdateResource = new UpdateResource(this, selectedResource);
+        UpdateResource.Show();
+        Hide();
+    }
 
-        private void btnDelete_Click(object sender, EventArgs e)
-        {
-            // throw new System.NotImplementedException();
-        }
+    private void btnDelete_Click(object sender, EventArgs e)
+    {
+        using Session1Entities entity = new();
+        dynamic selectedRow = dataGridView.CurrentRow?.DataBoundItem;
+        var resName = (string)selectedRow?.Name;
+        var selectedResource = entity.Resources.First(resource => resource.resName == resName);
 
-        private void btnBack_Click(object sender, EventArgs e)
-        {
-            HasParent.Back();
-        }
+        selectedResource.Resource_Allocation
+            .ToList()
+            .ForEach(allocation => entity.Resource_Allocation.Remove(allocation));
+
+        entity.Resources.Remove(selectedResource);
+
+        entity.SaveChanges();
+
+        UpdateGridView(entity);
+    }
+
+    private void btnBack_Click(object sender, EventArgs e)
+    {
+        CanInput.ClearInputs();
+        HasParent.Back();
     }
 }

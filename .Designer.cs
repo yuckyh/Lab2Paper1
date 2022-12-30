@@ -2928,9 +2928,10 @@ namespace Lab2Paper1.Session1DataSetTableAdapters {
             this._adapter.TableMappings.Add(tableMapping);
             this._adapter.DeleteCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.DeleteCommand.Connection = this.Connection;
-            this._adapter.DeleteCommand.CommandText = "DELETE FROM [dbo].[Resource] WHERE (([resId] = @Original_resId) AND ([resName] = " +
-                "@Original_resName) AND ([resTypeIdFK] = @Original_resTypeIdFK) AND ([remainingQu" +
-                "antity] = @Original_remainingQuantity))";
+            this._adapter.DeleteCommand.CommandText = @"DELETE FROM [dbo].[Resource] WHERE (([resId] = @Original_resId) AND
+                                            ([resName] = @Original_resName) AND ([resTypeIdFK] = @Original_resTypeIdFK)
+                                            AND ([remainingQuantity] = @Original_remainingQuantity))
+                                        ";
             this._adapter.DeleteCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_resId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "resId", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_resName", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "resName", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
@@ -2938,17 +2939,25 @@ namespace Lab2Paper1.Session1DataSetTableAdapters {
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_remainingQuantity", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "remainingQuantity", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.InsertCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.InsertCommand.Connection = this.Connection;
-            this._adapter.InsertCommand.CommandText = "INSERT INTO [dbo].[Resource] ([resName], [resTypeIdFK], [remainingQuantity]) VALU" +
-                "ES (@resName, @resTypeIdFK, @remainingQuantity);\r\nSELECT resId, resName, resType" +
-                "IdFK, remainingQuantity FROM Resource WHERE (resId = SCOPE_IDENTITY())";
+            this._adapter.InsertCommand.CommandText = @"INSERT INTO [dbo].[Resource] ([resName], [resTypeIdFK],
+                                            [remainingQuantity]) VALUES (@resName, @resTypeIdFK, @remainingQuantity);
+                                            SELECT resId, resName, resTypeIdFK, remainingQuantity FROM Resource WHERE
+                                            (resId = SCOPE_IDENTITY())
+                                        ";
             this._adapter.InsertCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@resName", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "resName", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@resTypeIdFK", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "resTypeIdFK", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@remainingQuantity", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "remainingQuantity", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.UpdateCommand.Connection = this.Connection;
-            this._adapter.UpdateCommand.CommandText = @"UPDATE [dbo].[Resource] SET [resName] = @resName, [resTypeIdFK] = @resTypeIdFK, [remainingQuantity] = @remainingQuantity WHERE (([resId] = @Original_resId) AND ([resName] = @Original_resName) AND ([resTypeIdFK] = @Original_resTypeIdFK) AND ([remainingQuantity] = @Original_remainingQuantity));
-SELECT resId, resName, resTypeIdFK, remainingQuantity FROM Resource WHERE (resId = @resId)";
+            this._adapter.UpdateCommand.CommandText = @"UPDATE [dbo].[Resource] SET [resName] = @resName, [resTypeIdFK] =
+                                            @resTypeIdFK, [remainingQuantity] = @remainingQuantity WHERE (([resId] =
+                                            @Original_resId) AND ([resName] = @Original_resName) AND ([resTypeIdFK] =
+                                            @Original_resTypeIdFK) AND ([remainingQuantity] =
+                                            @Original_remainingQuantity));
+                                            SELECT resId, resName, resTypeIdFK, remainingQuantity FROM Resource WHERE
+                                            (resId = @resId)
+                                        ";
             this._adapter.UpdateCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@resName", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "resName", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@resTypeIdFK", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "resTypeIdFK", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
@@ -2973,7 +2982,8 @@ SELECT resId, resName, resTypeIdFK, remainingQuantity FROM Resource WHERE (resId
             this._commandCollection = new global::System.Data.SqlClient.SqlCommand[1];
             this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = "SELECT resId, resName, resTypeIdFK, remainingQuantity FROM dbo.Resource";
+            this._commandCollection[0].CommandText = "SELECT resId, resName, resTypeIdFK, remainingQuantity FROM\r\n                     " +
+                "                       dbo.Resource\r\n                                        ";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
         }
         
@@ -3264,24 +3274,32 @@ SELECT resId, resName, resTypeIdFK, remainingQuantity FROM Resource WHERE (resId
             this._adapter.TableMappings.Add(tableMapping);
             this._adapter.DeleteCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.DeleteCommand.Connection = this.Connection;
-            this._adapter.DeleteCommand.CommandText = "DELETE FROM [dbo].[Resource_Allocation] WHERE (([allocId] = @Original_allocId) AN" +
-                "D ([resIdFK] = @Original_resIdFK) AND ([skillIdFK] = @Original_skillIdFK))";
+            this._adapter.DeleteCommand.CommandText = @"DELETE FROM [dbo].[Resource_Allocation] WHERE (([allocId] =
+                                            @Original_allocId) AND ([resIdFK] = @Original_resIdFK) AND ([skillIdFK] =
+                                            @Original_skillIdFK))
+                                        ";
             this._adapter.DeleteCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_allocId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "allocId", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_resIdFK", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "resIdFK", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_skillIdFK", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "skillIdFK", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.InsertCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.InsertCommand.Connection = this.Connection;
-            this._adapter.InsertCommand.CommandText = "INSERT INTO [dbo].[Resource_Allocation] ([resIdFK], [skillIdFK]) VALUES (@resIdFK" +
-                ", @skillIdFK);\r\nSELECT allocId, resIdFK, skillIdFK FROM Resource_Allocation WHER" +
-                "E (allocId = SCOPE_IDENTITY())";
+            this._adapter.InsertCommand.CommandText = @"INSERT INTO [dbo].[Resource_Allocation] ([resIdFK], [skillIdFK])
+                                            VALUES (@resIdFK, @skillIdFK);
+                                            SELECT allocId, resIdFK, skillIdFK FROM Resource_Allocation WHERE (allocId =
+                                            SCOPE_IDENTITY())
+                                        ";
             this._adapter.InsertCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@resIdFK", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "resIdFK", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@skillIdFK", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "skillIdFK", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.UpdateCommand.Connection = this.Connection;
-            this._adapter.UpdateCommand.CommandText = @"UPDATE [dbo].[Resource_Allocation] SET [resIdFK] = @resIdFK, [skillIdFK] = @skillIdFK WHERE (([allocId] = @Original_allocId) AND ([resIdFK] = @Original_resIdFK) AND ([skillIdFK] = @Original_skillIdFK));
-SELECT allocId, resIdFK, skillIdFK FROM Resource_Allocation WHERE (allocId = @allocId)";
+            this._adapter.UpdateCommand.CommandText = @"UPDATE [dbo].[Resource_Allocation] SET [resIdFK] = @resIdFK,
+                                            [skillIdFK] = @skillIdFK WHERE (([allocId] = @Original_allocId) AND
+                                            ([resIdFK] = @Original_resIdFK) AND ([skillIdFK] = @Original_skillIdFK));
+                                            SELECT allocId, resIdFK, skillIdFK FROM Resource_Allocation WHERE (allocId =
+                                            @allocId)
+                                        ";
             this._adapter.UpdateCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@resIdFK", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "resIdFK", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@skillIdFK", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "skillIdFK", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
@@ -3304,7 +3322,8 @@ SELECT allocId, resIdFK, skillIdFK FROM Resource_Allocation WHERE (allocId = @al
             this._commandCollection = new global::System.Data.SqlClient.SqlCommand[1];
             this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = "SELECT allocId, resIdFK, skillIdFK FROM dbo.Resource_Allocation";
+            this._commandCollection[0].CommandText = "SELECT allocId, resIdFK, skillIdFK FROM dbo.Resource_Allocation\r\n                " +
+                "                        ";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
         }
         
@@ -3570,22 +3589,29 @@ SELECT allocId, resIdFK, skillIdFK FROM Resource_Allocation WHERE (allocId = @al
             this._adapter.TableMappings.Add(tableMapping);
             this._adapter.DeleteCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.DeleteCommand.Connection = this.Connection;
-            this._adapter.DeleteCommand.CommandText = "DELETE FROM [dbo].[Resource_Type] WHERE (([resTypeId] = @Original_resTypeId) AND " +
-                "([resTypeName] = @Original_resTypeName))";
+            this._adapter.DeleteCommand.CommandText = "DELETE FROM [dbo].[Resource_Type] WHERE (([resTypeId] =\r\n                        " +
+                "                    @Original_resTypeId) AND ([resTypeName] = @Original_resTypeN" +
+                "ame))\r\n                                        ";
             this._adapter.DeleteCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_resTypeId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "resTypeId", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_resTypeName", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "resTypeName", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.InsertCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.InsertCommand.Connection = this.Connection;
-            this._adapter.InsertCommand.CommandText = "INSERT INTO [dbo].[Resource_Type] ([resTypeName]) VALUES (@resTypeName);\r\nSELECT " +
-                "resTypeId, resTypeName FROM Resource_Type WHERE (resTypeId = SCOPE_IDENTITY())";
+            this._adapter.InsertCommand.CommandText = @"INSERT INTO [dbo].[Resource_Type] ([resTypeName]) VALUES
+                                            (@resTypeName);
+                                            SELECT resTypeId, resTypeName FROM Resource_Type WHERE (resTypeId =
+                                            SCOPE_IDENTITY())
+                                        ";
             this._adapter.InsertCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@resTypeName", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "resTypeName", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.UpdateCommand.Connection = this.Connection;
-            this._adapter.UpdateCommand.CommandText = "UPDATE [dbo].[Resource_Type] SET [resTypeName] = @resTypeName WHERE (([resTypeId]" +
-                " = @Original_resTypeId) AND ([resTypeName] = @Original_resTypeName));\r\nSELECT re" +
-                "sTypeId, resTypeName FROM Resource_Type WHERE (resTypeId = @resTypeId)";
+            this._adapter.UpdateCommand.CommandText = @"UPDATE [dbo].[Resource_Type] SET [resTypeName] = @resTypeName WHERE
+                                            (([resTypeId] = @Original_resTypeId) AND ([resTypeName] =
+                                            @Original_resTypeName));
+                                            SELECT resTypeId, resTypeName FROM Resource_Type WHERE (resTypeId =
+                                            @resTypeId)
+                                        ";
             this._adapter.UpdateCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@resTypeName", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "resTypeName", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_resTypeId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "resTypeId", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
@@ -3888,22 +3914,25 @@ SELECT allocId, resIdFK, skillIdFK FROM Resource_Allocation WHERE (allocId = @al
             this._adapter.TableMappings.Add(tableMapping);
             this._adapter.DeleteCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.DeleteCommand.Connection = this.Connection;
-            this._adapter.DeleteCommand.CommandText = "DELETE FROM [dbo].[Skill] WHERE (([skillId] = @Original_skillId) AND ([skillName]" +
-                " = @Original_skillName))";
+            this._adapter.DeleteCommand.CommandText = "DELETE FROM [dbo].[Skill] WHERE (([skillId] = @Original_skillId)\r\n               " +
+                "                             AND ([skillName] = @Original_skillName))\r\n         " +
+                "                               ";
             this._adapter.DeleteCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_skillId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "skillId", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_skillName", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "skillName", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.InsertCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.InsertCommand.Connection = this.Connection;
-            this._adapter.InsertCommand.CommandText = "INSERT INTO [dbo].[Skill] ([skillName]) VALUES (@skillName);\r\nSELECT skillId, ski" +
-                "llName FROM Skill WHERE (skillId = SCOPE_IDENTITY())";
+            this._adapter.InsertCommand.CommandText = "INSERT INTO [dbo].[Skill] ([skillName]) VALUES (@skillName);\r\n                   " +
+                "                         SELECT skillId, skillName FROM Skill WHERE (skillId = S" +
+                "COPE_IDENTITY())\r\n                                        ";
             this._adapter.InsertCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@skillName", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "skillName", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.UpdateCommand.Connection = this.Connection;
-            this._adapter.UpdateCommand.CommandText = "UPDATE [dbo].[Skill] SET [skillName] = @skillName WHERE (([skillId] = @Original_s" +
-                "killId) AND ([skillName] = @Original_skillName));\r\nSELECT skillId, skillName FRO" +
-                "M Skill WHERE (skillId = @skillId)";
+            this._adapter.UpdateCommand.CommandText = @"UPDATE [dbo].[Skill] SET [skillName] = @skillName WHERE (([skillId]
+                                            = @Original_skillId) AND ([skillName] = @Original_skillName));
+                                            SELECT skillId, skillName FROM Skill WHERE (skillId = @skillId)
+                                        ";
             this._adapter.UpdateCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@skillName", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "skillName", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_skillId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "skillId", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
@@ -4208,9 +4237,10 @@ SELECT allocId, resIdFK, skillIdFK FROM Resource_Allocation WHERE (allocId = @al
             this._adapter.TableMappings.Add(tableMapping);
             this._adapter.DeleteCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.DeleteCommand.Connection = this.Connection;
-            this._adapter.DeleteCommand.CommandText = "DELETE FROM [dbo].[User] WHERE (([userId] = @Original_userId) AND ([userName] = @" +
-                "Original_userName) AND ([userPw] = @Original_userPw) AND ([userTypeIdFK] = @Orig" +
-                "inal_userTypeIdFK))";
+            this._adapter.DeleteCommand.CommandText = @"DELETE FROM [dbo].[User] WHERE (([userId] = @Original_userId) AND
+                                            ([userName] = @Original_userName) AND ([userPw] = @Original_userPw) AND
+                                            ([userTypeIdFK] = @Original_userTypeIdFK))
+                                        ";
             this._adapter.DeleteCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_userId", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "userId", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_userName", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "userName", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
@@ -4218,9 +4248,11 @@ SELECT allocId, resIdFK, skillIdFK FROM Resource_Allocation WHERE (allocId = @al
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_userTypeIdFK", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "userTypeIdFK", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.InsertCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.InsertCommand.Connection = this.Connection;
-            this._adapter.InsertCommand.CommandText = "INSERT INTO [dbo].[User] ([userId], [userName], [userPw], [userTypeIdFK]) VALUES " +
-                "(@userId, @userName, @userPw, @userTypeIdFK);\r\nSELECT userId, userName, userPw, " +
-                "userTypeIdFK FROM [User] WHERE (userId = @userId)";
+            this._adapter.InsertCommand.CommandText = @"INSERT INTO [dbo].[User] ([userId], [userName], [userPw],
+                                            [userTypeIdFK]) VALUES (@userId, @userName, @userPw, @userTypeIdFK);
+                                            SELECT userId, userName, userPw, userTypeIdFK FROM [User] WHERE (userId =
+                                            @userId)
+                                        ";
             this._adapter.InsertCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@userId", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "userId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@userName", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "userName", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
@@ -4228,8 +4260,13 @@ SELECT allocId, resIdFK, skillIdFK FROM Resource_Allocation WHERE (allocId = @al
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@userTypeIdFK", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "userTypeIdFK", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.UpdateCommand.Connection = this.Connection;
-            this._adapter.UpdateCommand.CommandText = @"UPDATE [dbo].[User] SET [userId] = @userId, [userName] = @userName, [userPw] = @userPw, [userTypeIdFK] = @userTypeIdFK WHERE (([userId] = @Original_userId) AND ([userName] = @Original_userName) AND ([userPw] = @Original_userPw) AND ([userTypeIdFK] = @Original_userTypeIdFK));
-SELECT userId, userName, userPw, userTypeIdFK FROM [User] WHERE (userId = @userId)";
+            this._adapter.UpdateCommand.CommandText = @"UPDATE [dbo].[User] SET [userId] = @userId, [userName] = @userName,
+                                            [userPw] = @userPw, [userTypeIdFK] = @userTypeIdFK WHERE (([userId] =
+                                            @Original_userId) AND ([userName] = @Original_userName) AND ([userPw] =
+                                            @Original_userPw) AND ([userTypeIdFK] = @Original_userTypeIdFK));
+                                            SELECT userId, userName, userPw, userTypeIdFK FROM [User] WHERE (userId =
+                                            @userId)
+                                        ";
             this._adapter.UpdateCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@userId", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "userId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@userName", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "userName", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
@@ -4254,7 +4291,8 @@ SELECT userId, userName, userPw, userTypeIdFK FROM [User] WHERE (userId = @userI
             this._commandCollection = new global::System.Data.SqlClient.SqlCommand[1];
             this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = "SELECT userId, userName, userPw, userTypeIdFK FROM dbo.[User]";
+            this._commandCollection[0].CommandText = "SELECT userId, userName, userPw, userTypeIdFK FROM dbo.[User]\r\n                  " +
+                "                      ";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
         }
         
@@ -4585,22 +4623,29 @@ SELECT userId, userName, userPw, userTypeIdFK FROM [User] WHERE (userId = @userI
             this._adapter.TableMappings.Add(tableMapping);
             this._adapter.DeleteCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.DeleteCommand.Connection = this.Connection;
-            this._adapter.DeleteCommand.CommandText = "DELETE FROM [dbo].[User_Type] WHERE (([userTypeId] = @Original_userTypeId) AND ([" +
-                "userTypeName] = @Original_userTypeName))";
+            this._adapter.DeleteCommand.CommandText = "DELETE FROM [dbo].[User_Type] WHERE (([userTypeId] =\r\n                           " +
+                "                 @Original_userTypeId) AND ([userTypeName] = @Original_userTypeN" +
+                "ame))\r\n                                        ";
             this._adapter.DeleteCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_userTypeId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "userTypeId", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_userTypeName", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "userTypeName", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.InsertCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.InsertCommand.Connection = this.Connection;
-            this._adapter.InsertCommand.CommandText = "INSERT INTO [dbo].[User_Type] ([userTypeName]) VALUES (@userTypeName);\r\nSELECT us" +
-                "erTypeId, userTypeName FROM User_Type WHERE (userTypeId = SCOPE_IDENTITY())";
+            this._adapter.InsertCommand.CommandText = @"INSERT INTO [dbo].[User_Type] ([userTypeName]) VALUES
+                                            (@userTypeName);
+                                            SELECT userTypeId, userTypeName FROM User_Type WHERE (userTypeId =
+                                            SCOPE_IDENTITY())
+                                        ";
             this._adapter.InsertCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@userTypeName", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "userTypeName", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.UpdateCommand.Connection = this.Connection;
-            this._adapter.UpdateCommand.CommandText = "UPDATE [dbo].[User_Type] SET [userTypeName] = @userTypeName WHERE (([userTypeId] " +
-                "= @Original_userTypeId) AND ([userTypeName] = @Original_userTypeName));\r\nSELECT " +
-                "userTypeId, userTypeName FROM User_Type WHERE (userTypeId = @userTypeId)";
+            this._adapter.UpdateCommand.CommandText = @"UPDATE [dbo].[User_Type] SET [userTypeName] = @userTypeName WHERE
+                                            (([userTypeId] = @Original_userTypeId) AND ([userTypeName] =
+                                            @Original_userTypeName));
+                                            SELECT userTypeId, userTypeName FROM User_Type WHERE (userTypeId =
+                                            @userTypeId)
+                                        ";
             this._adapter.UpdateCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@userTypeName", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "userTypeName", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_userTypeId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "userTypeId", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));

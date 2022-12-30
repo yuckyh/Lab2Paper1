@@ -37,11 +37,11 @@ partial class AddResource
         this.label3 = new System.Windows.Forms.Label();
         this.label4 = new System.Windows.Forms.Label();
         this.label5 = new System.Windows.Forms.Label();
-        this.btnAdd = new System.Windows.Forms.Button();
         this.tbName = new System.Windows.Forms.TextBox();
         this.tbQuantity = new System.Windows.Forms.TextBox();
         this.comboBoxType = new System.Windows.Forms.ComboBox();
         this.chkListBoxSkills = new System.Windows.Forms.CheckedListBox();
+        this.btnAdd = new System.Windows.Forms.Button();
         this.SuspendLayout();
         // 
         // btnBack
@@ -94,26 +94,16 @@ partial class AddResource
         this.label5.TabIndex = 5;
         this.label5.Text = "Allocated Skill(s):";
         // 
-        // btnAdd
-        // 
-        this.btnAdd.Location = new System.Drawing.Point(362, 358);
-        this.btnAdd.Name = "btnAdd";
-        this.btnAdd.Size = new System.Drawing.Size(75, 23);
-        this.btnAdd.TabIndex = 6;
-        this.btnAdd.Text = "Add Resource";
-        this.btnAdd.UseVisualStyleBackColor = true;
-        this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
-        // 
         // tbName
         // 
-        this.tbName.Location = new System.Drawing.Point(345, 134);
+        this.tbName.Location = new System.Drawing.Point(337, 134);
         this.tbName.Name = "tbName";
         this.tbName.Size = new System.Drawing.Size(100, 20);
         this.tbName.TabIndex = 7;
         // 
         // tbQuantity
         // 
-        this.tbQuantity.Location = new System.Drawing.Point(345, 220);
+        this.tbQuantity.Location = new System.Drawing.Point(337, 220);
         this.tbQuantity.Name = "tbQuantity";
         this.tbQuantity.Size = new System.Drawing.Size(100, 20);
         this.tbQuantity.TabIndex = 8;
@@ -121,7 +111,7 @@ partial class AddResource
         // comboBoxType
         // 
         this.comboBoxType.FormattingEnabled = true;
-        this.comboBoxType.Location = new System.Drawing.Point(345, 175);
+        this.comboBoxType.Location = new System.Drawing.Point(337, 175);
         this.comboBoxType.Name = "comboBoxType";
         this.comboBoxType.Size = new System.Drawing.Size(121, 21);
         this.comboBoxType.TabIndex = 9;
@@ -129,21 +119,31 @@ partial class AddResource
         // chkListBoxSkills
         // 
         this.chkListBoxSkills.FormattingEnabled = true;
-        this.chkListBoxSkills.Location = new System.Drawing.Point(342, 258);
+        this.chkListBoxSkills.Location = new System.Drawing.Point(337, 258);
         this.chkListBoxSkills.Name = "chkListBoxSkills";
         this.chkListBoxSkills.Size = new System.Drawing.Size(120, 94);
         this.chkListBoxSkills.TabIndex = 10;
+        // 
+        // btnAdd
+        // 
+        this.btnAdd.Location = new System.Drawing.Point(349, 367);
+        this.btnAdd.Name = "btnAdd";
+        this.btnAdd.Size = new System.Drawing.Size(88, 23);
+        this.btnAdd.TabIndex = 11;
+        this.btnAdd.Text = "Add Resource";
+        this.btnAdd.UseVisualStyleBackColor = true;
+        this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
         // 
         // AddResource
         // 
         this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
         this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
         this.ClientSize = new System.Drawing.Size(800, 450);
+        this.Controls.Add(this.btnAdd);
         this.Controls.Add(this.chkListBoxSkills);
         this.Controls.Add(this.comboBoxType);
         this.Controls.Add(this.tbQuantity);
         this.Controls.Add(this.tbName);
-        this.Controls.Add(this.btnAdd);
         this.Controls.Add(this.label5);
         this.Controls.Add(this.label4);
         this.Controls.Add(this.label3);
@@ -156,14 +156,14 @@ partial class AddResource
         this.PerformLayout();
     }
 
+    private System.Windows.Forms.Button btnAdd;
+
     private System.Windows.Forms.CheckedListBox chkListBoxSkills;
 
     private System.Windows.Forms.ComboBox comboBoxType;
 
     private System.Windows.Forms.TextBox tbName;
     private System.Windows.Forms.TextBox tbQuantity;
-
-    private System.Windows.Forms.Button btnAdd;
 
     private System.Windows.Forms.Label label5;
 
